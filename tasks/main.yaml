@@ -1,0 +1,30 @@
+---
+  - name: Including install.yaml OpenVPN tasks
+    include: install.yaml 
+
+  - name: Including easy-rsa.yaml for OpenVPN setup
+    include: easy-rsa.yaml
+
+  - name: Including server_keys.yaml for OpenVPN setup
+    include: server_keys.yaml
+
+  - name: Including config.yaml for OpenVPN setup
+    include: config.yaml
+
+  - name: Including client_keys.yaml for OpenVPN setup
+    include: client_keys.yaml
+
+  - name: Enable ipv4 forwarding
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: 1
+      sysctl_set: yes 
+      state: present 
+      reload: yes
+
+  - name: Including firewall.yaml for OpenVPN setup
+    include: firewall.yaml
+    tags: test
+
+
+...

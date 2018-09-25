@@ -1,0 +1,18 @@
+client
+dev tun
+proto udp
+sndbuf 0
+rcvbuf 0
+remote my-server-1 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+auth SHA512
+cipher AES-256-CBC
+comp-lzo yes
+push "comp-lzo yes"
+setenv opt block-outside-dns
+key-direction 1
+verb 3

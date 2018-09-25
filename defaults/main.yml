@@ -1,0 +1,8 @@
+---
+server_name: "opstree"
+client_name: "sudipt"
+PROTOCOL: "tcp"
+PORT: "1194"
+openvpn_server_network: "10.8.0.0"
+base_directory: "etc/openvpn"
+...

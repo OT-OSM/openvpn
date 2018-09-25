@@ -1,0 +1,13 @@
+---
+# handlers file for openvpn
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: true
+
+- name: starting_openvpn
+  service:
+    name: openvpn@server
+    state: restarted
+    enabled: true
+...

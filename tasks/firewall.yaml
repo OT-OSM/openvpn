@@ -1,0 +1,36 @@
+---
+
+- name: iptables - Apply the routing rule so that traffic can leave the VPN.
+  iptables:
+    table: nat
+    action: append
+    chain: POSTROUTING
+    source: "{{openvpn_server_network}}/24"
+    out_interface: eth0 
+    jump: MASQUERADE
+    comment: "Perform NAT readdressing"
+
+- name: Adding iptable rules to rc.local
+  lineinfile:
+    path: /etc/rc.local
+    line: "{{ item }}"
+  with_items:
+  - iptables -t nat -A POSTROUTING -s {{ openvpn_server_network }}/24 -o eth0 -j MASQUERADE
+
+- name: Allow all access to {{PROTOCOL}} port {{PORT}}
+  ufw:
+    rule: allow
+    port: "{{PORT}}"
+    proto: "{{PROTOCOL}}"
+
+- name: Copying file of server configuration
+  template: 
+  args:
+    src: before.rules.j2
+    dest: /etc/ufw/before.rules
+
+- name: restart ufw
+  service:
+    name: ufw
+    state: restarted
+...

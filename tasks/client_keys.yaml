@@ -1,0 +1,40 @@
+---
+   - name: Verifying {{client_name}}.crt exist or not
+     stat: path=/{{ base_directory }}/{{ client_name }}.crt
+     register: client_crt
+
+   - name: Creating OpenVPN Client certificate and key pair
+     shell: ./easyrsa build-client-full {{ client_name }} nopass
+     args:
+       chdir: //{{ base_directory }}/easy-rsa/
+       creates: /{{ base_directory }}/easy-rsa/pki/issued/{{ client_name }}.crt
+     when: client_crt.stat.exists == False
+
+   - name: Copying keys to openvpn directory
+     copy:
+       src: "{{ item }}"
+       dest: /{{ base_directory }}
+       remote_src: yes
+     with_items: 
+     - /{{ base_directory }}/easy-rsa/pki/issued/{{ client_name }}.crt
+     - /{{ base_directory }}/easy-rsa/pki/private/{{ client_name }}.key
+
+   - name: Copying the sample script to generate {{client_name}} keys
+     copy: 
+     args:
+       src: make_config.sh 
+       dest: /{{ base_directory }}/
+       mode: 700
+
+   - name: Creating client certificate and key
+     shell: ./make_config.sh {{client_name}} 
+     args: 
+       chdir: /{{ base_directory }}/
+       creates: /{{ base_directory }}/{{client_name}}.ovpn
+      
+   - name: Copying the {{client_name}}.ovpn to localhost
+     fetch:
+       src: /{{ base_directory }}/{{client_name}}.ovpn
+       dest: /tmp/
+       flat: yes
+... 
