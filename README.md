@@ -10,7 +10,7 @@ Note:  
  - Disable Source/Destination Check. 
      
      > From the list of instances, select the VPN instance and then Networking->Change Source/Dest. 
-     > Check > from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
+     > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
      > server will not be able to connect to your other EC2 instances.
 
 Directory Layout
