@@ -9,7 +9,7 @@
   unarchive:
     src: /tmp/EasyRSA-3.0.4.tgz
     dest: /tmp
-    creates: /tmp/EasyRSA-3.0.4
+    creates: /tmp/{{ easy_rsa_pkg }}
     remote_src: true
 
 - name: Creating easy-rsa directory in openvpn directory
@@ -18,7 +18,7 @@
     state: directory
 
 - name: Copying rsa files to the working directory
-  shell: cp -R /tmp/EasyRSA-3.0.4 /{{ base_directory }}/easy-rsa
+  shell: cp -R /tmp/{[ easy_rsa_pkg }} /{{ base_directory }}/easy-rsa
   args:
     creates: /{{ base_directory }}/easy-rsa
 ...
