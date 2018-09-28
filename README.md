@@ -4,8 +4,11 @@ OpenVPN Role
 ============
 
 Ansible role to install OpenVPN. This role is tested on Canonical, Ubuntu, 16.04 LTS, amd64 xenial.
-This role will setup openvpn server on Canonical, Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud
+This role will setup openvpn server on Canonical, Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud.
 
+The role consist of two meta files
+- clientlist: Enter the namer of the client you want to add.
+- revokelist: Enter the names of the client you want to revoke.
 Note:  
  - Disable Source/Destination Check. 
      
@@ -18,6 +21,8 @@ Directory Layout
 ```
 osm_openvpn
 .
+├── ~
+├── clientlist
 ├── defaults
 │   └── main.yml
 ├── files
@@ -25,6 +30,7 @@ osm_openvpn
 ├── handlers
 │   └── main.yml
 ├── README.md
+├── revokelist
 ├── tasks
 │   ├── client_keys.yaml
 │   ├── config.yaml
@@ -32,13 +38,14 @@ osm_openvpn
 │   ├── firewall.yaml
 │   ├── install.yaml
 │   ├── main.yaml
+│   ├── revoke.yaml
 │   └── server_keys.yaml
 └── templates
     ├── before.rules.j2
     ├── client.conf.j2
     └── server.conf.j2
 
-5 directories, 14 files
+5 directories, 18 files
 
 ```
 
@@ -49,12 +56,16 @@ The variables that can be passed to this role and a brief description about them
 
 ```sh
 ---
-server_name: "opstree"
-client_name: "osm"
+# Enter name of Server
+server_name: "server"
+# Enter PROTOCOL on which OpenVpn will work
 PROTOCOL: "tcp"
+# Enter PORT on which OpenVpn will work
 PORT: "1194"
+# Enter Server network on which OpenVpn will work
 openvpn_server_network: "10.8.0.0"
 base_directory: "etc/openvpn"
+easy_rsa_url: "https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.4/EasyRSA-3.0.4.tgz"
 ...
 
 
