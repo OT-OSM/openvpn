@@ -89,3 +89,9 @@ Client keys
 -----------
 
 Client keys will be generated in /tmp/{{client_name}}.ovpn of local host.
+
+Known Issues
+------------
+
+There are issues in client_keys.yaml and revoke.yaml, when there is no content in revokelist the revoke.yaml will through error as it woudn't find any values. Similarily with clientlist.
+but the role is working properly, no issues in that.
