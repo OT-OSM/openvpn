@@ -9,8 +9,9 @@ This role will setup openvpn server on Canonical, Ubuntu, 16.04 LTS, amd64 xenia
 The role consist of two meta files
 - clientlist: Enter the namer of the client you want to add.
 - revokelist: Enter the names of the client you want to revoke.
-Note:  
- - Disable Source/Destination Check. 
+
+### Note:  
+  - Disable Source/Destination Check. 
      
      > From the list of instances, select the VPN instance and then Networking->Change Source/Dest. 
      > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
