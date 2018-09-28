@@ -14,7 +14,6 @@
 - name: Including client_keys.yaml for OpenVPN setup
   include: client_keys.yaml
 #  when: clientlist is defined
-  tags: test
 
 - name: Including revoke.yaml for OpenVpn setup
   include: revoke.yaml
