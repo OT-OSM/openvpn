@@ -1,8 +1,16 @@
 ---
-server_name: "opstree"
-client_name: "sudipt"
+# Enter name of Server
+server_name: "server"
+# Enter name of client whose keys to be Generated
+client_name: []
+# Enter name of client whose keys to be Revoked
+revoke_client: [A, B, c, client, d, present]
+# Enter PROTOCOL on which OpenVpn will work
 PROTOCOL: "tcp"
+# Enter PORT on which OpenVpn will work
 PORT: "1194"
+# Enter Server network on which OpenVpn will work
 openvpn_server_network: "10.8.0.0"
 base_directory: "etc/openvpn"
+easy_rsa_url: "https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.4/EasyRSA-3.0.4.tgz"
 ...

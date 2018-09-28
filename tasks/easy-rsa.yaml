@@ -1,22 +1,24 @@
 ---
-   - name: Downloading easy rsa
-     get_url:
-      url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.4/EasyRSA-3.0.4.tgz
-      dest: /tmp/
-      validate_certs: False
+- name: Downloading easy rsa
+  get_url:
+    url: "{{ easy_rsa_url }}"
+    dest: /tmp/
+    validate_certs: False
 
-   - name: Unarchiving easy-rsa
-     unarchive:
-      src: /tmp/EasyRSA-3.0.4.tgz
-      dest: /tmp
-      creates: /tmp/EasyRSA-3.0.4
-      remote_src: true
+- name: Unarchiving easy-rsa
+  unarchive:
+    src: /tmp/EasyRSA-3.0.4.tgz
+    dest: /tmp
+    creates: /tmp/EasyRSA-3.0.4
+    remote_src: true
 
-   - name: Creating easy-rsa directory in openvpn directory
-     file:
-      path: etc/openvpn/easy-rsa
-      state: directory
+- name: Creating easy-rsa directory in openvpn directory
+  file:
+    path: etc/openvpn/easy-rsa
+    state: directory
 
-   - name: Copying rsa files to the working directory
-     shell: cp -R /tmp/EasyRSA-3.0.4 /{{ base_directory }}/easy-rsa
+- name: Copying rsa files to the working directory
+  shell: cp -R /tmp/EasyRSA-3.0.4 /{{ base_directory }}/easy-rsa
+  args:
+    creates: /{{ base_directory }}/easy-rsa
 ...
