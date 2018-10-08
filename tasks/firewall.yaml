@@ -23,7 +23,7 @@
     port: "{{PORT}}"
     proto: "{{PROTOCOL}}"
 
-- name: Copying file of server configuration
+- name: Copying file of ufw configuration
   template: 
   args:
     src: before.rules.j2

@@ -12,13 +12,13 @@
     creates: /tmp/{{ easy_rsa_pkg }}
     remote_src: true
 
-- name: Creating easy-rsa directory in openvpn directory
-  file:
-    path: etc/openvpn/easy-rsa
-    state: directory
+#- name: Creating easy-rsa directory in openvpn directory
+#  file:
+#    path: etc/openvpn/easy-rsa
+#    state: directory
 
 - name: Copying rsa files to the working directory
-  shell: cp -R /tmp/{[ easy_rsa_pkg }} /{{ base_directory }}/easy-rsa
+  shell: cp -r /tmp/{{ easy_rsa_pkg }} /{{ base_directory }}/easy-rsa
   args:
     creates: /{{ base_directory }}/easy-rsa
 ...

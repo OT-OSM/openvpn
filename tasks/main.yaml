@@ -2,8 +2,14 @@
 - name: Including install.yaml OpenVPN tasks
   include: install.yaml 
 
+- name: Verifying easy-rsa exist
+  stat: 
+    path: "/etc/openvpn/easy-rsa"
+  register: rsa
+
 - name: Including easy-rsa.yaml for OpenVPN setup
   include: easy-rsa.yaml
+  # when: rsa.stat.exists == False
 
 - name: Including server_keys.yaml for OpenVPN setup
   include: server_keys.yaml
