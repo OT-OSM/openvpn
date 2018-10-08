@@ -3,8 +3,8 @@
 OpenVPN Role
 ============
 
-Ansible role to install OpenVPN. This role is tested on Canonical, Ubuntu, 16.04 LTS, amd64 xenial.
-This role will setup openvpn server on Canonical, Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud.
+Ansible role to install OpenVPN.
+This role will setup openvpn server on Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud.
 
 The role consist of two meta files
 - clientlist: Enter the namer of the client you want to add.
