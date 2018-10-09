@@ -2,14 +2,14 @@
 - name: Including install.yaml OpenVPN tasks
   include: install.yaml 
 
-- name: Verifying easy-rsa exist
+- name: Verifying easyrsa exist
   stat: 
-    path: "/etc/openvpn/easy-rsa"
+    path: "/{{ base_directory }}/easy-rsa/easyrsa"
   register: rsa
 
 - name: Including easy-rsa.yaml for OpenVPN setup
   include: easy-rsa.yaml
-  # when: rsa.stat.exists == False
+  when: rsa.stat.exists == False
 
 - name: Including server_keys.yaml for OpenVPN setup
   include: server_keys.yaml
@@ -19,19 +19,9 @@
 
 - name: Including client_keys.yaml for OpenVPN setup
   include: client_keys.yaml
-#  when: clientlist is defined
 
 - name: Including revoke.yaml for OpenVpn setup
   include: revoke.yaml
-#  when: revokelist is defined
-
-- name: Enable ipv4 forwarding
-  sysctl:
-    name: net.ipv4.ip_forward
-    value: 1
-    sysctl_set: yes 
-    state: present 
-    reload: yes
 
 - name: Including firewall.yaml for OpenVPN setup
   include: firewall.yaml

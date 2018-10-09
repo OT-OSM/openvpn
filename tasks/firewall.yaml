@@ -1,4 +1,11 @@
 ---
+- name: Enable ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes 
+    state: present 
+    reload: yes
 
 - name: iptables - Apply the routing rule so that traffic can leave the VPN.
   iptables:
@@ -13,9 +20,8 @@
 - name: Adding iptable rules to rc.local
   lineinfile:
     path: /etc/rc.local
-    line: "{{ item }}"
-  with_items:
-  - iptables -t nat -A POSTROUTING -s {{ openvpn_server_network }}/24 -o eth0 -j MASQUERADE
+    insertbefore: '^exit 0'
+    line: iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
 - name: Allow all access to {{PROTOCOL}} port {{PORT}}
   ufw:
