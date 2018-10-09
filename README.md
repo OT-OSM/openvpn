@@ -22,7 +22,6 @@ Directory Layout
 ```
 osm_openvpn
 .
-├── ~
 ├── clientlist
 ├── defaults
 │   └── main.yml
@@ -30,6 +29,10 @@ osm_openvpn
 │   └── make_config.sh
 ├── handlers
 │   └── main.yml
+├── media
+│   ├── addvpn.jpg
+│   ├── client.png
+│   └── vpn.jpg
 ├── README.md
 ├── revokelist
 ├── tasks
@@ -46,7 +49,8 @@ osm_openvpn
     ├── client.conf.j2
     └── server.conf.j2
 
-5 directories, 18 files
+6 directories, 20 files
+
 
 ```
 
