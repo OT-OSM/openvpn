@@ -101,11 +101,11 @@ $   apt install network-manager-openvpn-gnome -y
 
 > After installing goto network settings
 
-![network](https://github.com/SudiptSharma/Media/blob/master/network.png)
+[network](https://github.com/SudiptSharma/Media/blob/master/network.png)
 
 > Then VPN settings and aad client keys
 
-![client](https://github.com/SudiptSharma/Media/blob/master/client.png)
+[client](https://github.com/SudiptSharma/Media/blob/master/client.png)
 
 Known Issues
 ------------
