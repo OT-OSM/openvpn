@@ -22,7 +22,6 @@ Directory Layout
 ```
 osm_openvpn
 .
-├── ~
 ├── clientlist
 ├── defaults
 │   └── main.yml
@@ -30,6 +29,10 @@ osm_openvpn
 │   └── make_config.sh
 ├── handlers
 │   └── main.yml
+├── media
+│   ├── addvpn.jpg
+│   ├── client.png
+│   └── vpn.jpg
 ├── README.md
 ├── revokelist
 ├── tasks
@@ -46,7 +49,8 @@ osm_openvpn
     ├── client.conf.j2
     └── server.conf.j2
 
-5 directories, 18 files
+6 directories, 20 files
+
 
 ```
 
@@ -92,11 +96,32 @@ Client keys will be generated in /tmp/{{client_name}}.ovpn of local host.
 
 For client Configuration
 ------------------------
+
+Install OpenVpn
+
+```sh
+$   apt-get install openvpn -y
+
+```
+
 Install Openvpn GUI
+
 
 ```sh
 $   apt install network-manager-openvpn-gnome -y
 ```
+
+After installing go to network settings
+
+![network](./media/vpn.jpg)
+
+Add VPN to your network settings
+
+![addvpn](./media/addvpn.jpg)
+
+Then VPN settings and add browse your client.ovpn
+
+![client](./media/client.png)
 
 Known Issues
 ------------
