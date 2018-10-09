@@ -1,0 +1,62 @@
+---
+- name: Creating pki directory 
+  shell: ./easyrsa init-pki
+  args:
+    chdir: /{{ base_directory }}/easy-rsa/
+    creates: /{{ base_directory }}/easy-rsa/pki
+
+- name: Verifying ca.crt exist or not
+  stat: path=/{{ base_directory }}/ca.crt
+  register: ca_crt
+
+- name: Creating Certificate Authority
+  shell: ./easyrsa --batch build-ca nopass 
+  args:
+    chdir: /{{ base_directory }}/easy-rsa/
+    creates: /{{ base_directory }}/easy-rsa/pki/ca.crt
+  when: ca_crt.stat.exists == False
+
+- name: Verifying dh1024.pem exist or not
+  stat: path=/{{ base_directory }}/dh.pem
+  register: dh_pem
+
+- name: Creating Diffie Hellman certificate
+  shell: ./easyrsa gen-dh
+  args: 
+    chdir: /{{ base_directory }}/easy-rsa/
+    creates: /{{ base_directory }}/easy-rsa/pki/dh.pem
+  when: dh_pem.stat.exists == False
+
+- name: Verifying {{server_name}}.crt exist or not
+  stat: path=/{{ base_directory }}/{{server_name}}.crt
+  register: server_crt
+
+- name: Creating OpenVPN {{server_name}} certificate and key pair
+  shell: ./easyrsa build-server-full {{server_name}} nopass 
+  args:
+    chdir: /{{ base_directory }}/easy-rsa/
+    creates: /{{ base_directory }}/easy-rsa/pki/issued/{{ server_name }}.crt
+  when: server_crt.stat.exists == False
+
+- name: Verifying ta.key exist or not
+  stat: path=/{{ base_directory }}/ta.key
+  register: ta_key
+
+- name: Generating an HMAC signature to strengthen the server's TLS integrity verification capabilities
+  shell: openvpn --genkey --secret /{{ base_directory }}/ta.key
+  args:
+    chdir: /{{ base_directory }}/easy-rsa/
+    creates: /{{ base_directory }}/ta.key
+  when: ta_key.stat.exists == False
+
+- name: Copying keys to openvpn directory
+  copy:
+    src: "{{ item }}"
+    dest: /{{ base_directory }}
+    remote_src: yes
+  with_items: 
+  - /{{ base_directory }}/easy-rsa/pki/ca.crt
+  - /{{ base_directory }}/easy-rsa/pki/issued/{{ server_name }}.crt
+  - /{{ base_directory }}/easy-rsa/pki/private/{{ server_name }}.key
+  - /{{ base_directory }}/easy-rsa/pki/dh.pem
+...

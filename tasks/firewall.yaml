@@ -1,0 +1,19 @@
+---
+- name: Enable ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes 
+    state: present 
+    reload: yes
+
+- name: iptables - Apply the routing rule so that traffic can leave the VPN.
+  iptables:
+    table: nat
+    action: append
+    chain: POSTROUTING
+    source: "{{openvpn_server_network}}/24"
+    out_interface: eth0 
+    jump: MASQUERADE
+    comment: "Perform NAT readdressing"
+...

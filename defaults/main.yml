@@ -1,0 +1,13 @@
+---
+# Enter name of Server
+server_name: "server"
+# Enter PROTOCOL on which OpenVpn will work
+PROTOCOL: "tcp"
+# Enter PORT on which OpenVpn will work
+PORT: "1194"
+# Enter Server network on which OpenVpn will work
+openvpn_server_network: "10.8.0.0"
+base_directory: "etc/openvpn"
+easy_rsa_url: "https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.4/EasyRSA-3.0.4.tgz"
+easy_rsa_pkg: "EasyRSA-3.0.4"
+...

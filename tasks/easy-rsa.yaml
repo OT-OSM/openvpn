@@ -1,0 +1,19 @@
+---
+- name: Downloading easy rsa
+  get_url:
+    url: "{{ easy_rsa_url }}"
+    dest: /tmp/
+    validate_certs: False
+
+- name: Unarchiving easy-rsa
+  unarchive:
+    src: /tmp/EasyRSA-3.0.4.tgz
+    dest: /tmp
+    creates: /tmp/{{ easy_rsa_pkg }}
+    remote_src: true
+
+- name: Copying rsa files to the working directory
+  shell: cp -r /tmp/{{ easy_rsa_pkg }} /{{ base_directory }}/easy-rsa
+  args:
+    creates: /{{ base_directory }}/easy-rsa
+...
