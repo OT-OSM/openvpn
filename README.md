@@ -92,6 +92,14 @@ Client keys will be generated in /tmp/{{client_name}}.ovpn of local host.
 
 For client Configuration
 ------------------------
+
+Install OpenVpn
+
+```sh
+$   apt-get install openvpn -y
+
+```
+
 Install Openvpn GUI
 
 
