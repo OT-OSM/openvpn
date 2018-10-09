@@ -101,11 +101,11 @@ $   apt install network-manager-openvpn-gnome -y
 
 After installing go to network settings
 
-![network](./media/network.png)
+![network](./media/vpn.jpg)
 
 Add VPN to your network settings
 
-![addvpn](./media/addvpn.png)
+![addvpn](./media/addvpn.jpg)
 
 Then VPN settings and add browse your client.ovpn
 
