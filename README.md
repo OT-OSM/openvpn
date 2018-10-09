@@ -99,13 +99,13 @@ Install Openvpn GUI
 $   apt install network-manager-openvpn-gnome -y
 ```
 
-> After installing goto network settings
+After installing go to network settings
 
-![](https://github.com/SudiptSharma/Media/blob/master/network.png)
+![network](https://github.com/SudiptSharma/Media/blob/master/network.png)
 
-> Then VPN settings and aad client keys
+Then VPN settings and add client keys
 
-![](https://github.com/SudiptSharma/Media/blob/master/client.png)
+![client](https://github.com/SudiptSharma/Media/blob/master/client.png)
 
 Known Issues
 ------------
