@@ -16,27 +16,4 @@
     out_interface: eth0 
     jump: MASQUERADE
     comment: "Perform NAT readdressing"
-
-- name: Adding iptable rules to rc.local
-  lineinfile:
-    path: /etc/rc.local
-    insertbefore: '^exit 0'
-    line: iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-
-# - name: Allow all access to {{PROTOCOL}} port {{PORT}}
-#   ufw:
-#     rule: allow
-#     port: "{{PORT}}"
-#     proto: "{{PROTOCOL}}"
-
-- name: Copying file of ufw configuration
-  template: 
-  args:
-    src: before.rules.j2
-    dest: /etc/ufw/before.rules
-
-- name: restart ufw
-  service:
-    name: ufw
-    state: restarted
 ...

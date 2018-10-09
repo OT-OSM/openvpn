@@ -90,6 +90,14 @@ Client keys
 
 Client keys will be generated in /tmp/{{client_name}}.ovpn of local host.
 
+For client Configuration
+------------------------
+Install Openvpn GUI
+
+```sh
+$   apt install network-manager-openvpn-gnome -y
+```
+
 Known Issues
 ------------
 
