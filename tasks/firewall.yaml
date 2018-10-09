@@ -23,11 +23,11 @@
     insertbefore: '^exit 0'
     line: iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
-- name: Allow all access to {{PROTOCOL}} port {{PORT}}
-  ufw:
-    rule: allow
-    port: "{{PORT}}"
-    proto: "{{PROTOCOL}}"
+# - name: Allow all access to {{PROTOCOL}} port {{PORT}}
+#   ufw:
+#     rule: allow
+#     port: "{{PORT}}"
+#     proto: "{{PROTOCOL}}"
 
 - name: Copying file of ufw configuration
   template: 
