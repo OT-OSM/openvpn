@@ -103,7 +103,11 @@ After installing go to network settings
 
 ![network](https://github.com/SudiptSharma/Media/blob/master/network.png)
 
-Then VPN settings and add client keys
+Add VPN to your network settings
+
+![addvpn]()
+
+Then VPN settings and add browse your client.ovpn
 
 ![client](https://github.com/SudiptSharma/Media/blob/master/client.png)
 
