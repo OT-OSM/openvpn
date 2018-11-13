@@ -1,0 +1,10 @@
+galaxy_info:
+  author: sudipt sharma
+  description: sudipt.sharma@opstree.com
+  company: opstree solutions
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 2.7
+  galaxy_tags: []
+  dependencies: []
+  
+
