@@ -3,8 +3,9 @@
 OpenVPN Role
 ============
 
-Ansible role to install OpenVPN.
-This role will setup openvpn server on Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud.
+- I am a Utility which will create a OpenVPN setup along with a management console.
+
+- This role will setup openvpn server on Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud.
 
 The role consist of two meta files
 - clientlist: Enter the namer of the client you want to add.
@@ -42,6 +43,7 @@ osm_openvpn
 │   ├── firewall.yaml
 │   ├── install.yaml
 │   ├── main.yaml
+│   ├── openvpn-monitor.yaml
 │   ├── revoke.yaml
 │   └── server_keys.yaml
 └── templates
@@ -49,7 +51,7 @@ osm_openvpn
     ├── client.conf.j2
     └── server.conf.j2
 
-6 directories, 20 files
+6 directories, 21 files
 
 
 ```
@@ -64,7 +66,7 @@ The variables that can be passed to this role and a brief description about them
 # Enter name of Server
 server_name: "server"
 # Enter PROTOCOL on which OpenVpn will work
-PROTOCOL: "tcp"
+PROTOCOL: "udp"
 # Enter PORT on which OpenVpn will work
 PORT: "1194"
 # Enter Server network on which OpenVpn will work
@@ -100,15 +102,15 @@ For client Configuration
 Install OpenVpn
 
 ```sh
-$   apt-get install openvpn -y
+   apt-get install openvpn -y
 
 ```
 
-Install Openvpn GUI
+Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 
 ```sh
-$   apt install network-manager-openvpn-gnome -y
+   apt install network-manager-openvpn-gnome -y
 ```
 
 After installing go to network settings
@@ -122,6 +124,36 @@ Add VPN to your network settings
 Then VPN settings and add browse your client.ovpn
 
 ![client](./media/client.png)
+
+Install Openvpn GUI for ubuntu 16.04 xenial
+
+```sh
+   apt install network-manager-openvpn-gnome -y
+```
+
+After installing go to network settings
+
+![add_connection](./media/add_connection.png)
+
+Add .ovpn file to your network settings
+
+![import_file](./media/import_file.png)
+
+Then select the .client.ovpn file.
+
+![select_file](./media/select_file.png)
+
+Then save the client.ovpn file.
+
+![save_key](./media/save_key.png)
+
+
+
+OpenVPN-Monitor Management Console
+----------------------------------
+
+- To Access the management console  http://public_ip/openvpn-monitor/
+
 
 Known Issues
 ------------
