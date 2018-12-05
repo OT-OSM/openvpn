@@ -1,14 +1,14 @@
 ---
 - name: Installing openvpn package and updating cache for ubuntu & Debian
-  apt: 
-    pkg: openvpn 
-    update_cache: yes 
+  apt:
+    pkg: openvpn
+    update_cache: yes
     cache_valid_time: 3600
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: Install EPEL repository
   yum:
-    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    name: "{{ epel_repo }}"
     state: present
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
 
@@ -31,14 +31,14 @@
     system: yes
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
 
-- name: Changing the ownership of openvpn for Redhat & Centos
+- name: Changing the ownership of openvpn client for Redhat & Centos
   file:
     path: /etc/openvpn/client
     owner: root
     group: root
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
 
-- name: Changing the ownership of openvpn for Redhat & Centos
+- name: Changing the ownership of openvpn server for Redhat & Centos
   file:
     path: /etc/openvpn/server
     owner: root

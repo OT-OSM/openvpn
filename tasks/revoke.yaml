@@ -1,9 +1,9 @@
 ---
 - name: Revoking OpenVPN Client certificate and key pair
-  shell: ./easyrsa --batch revoke "{{ item.split(',')[0] | trim }}"
+  command: ./easyrsa --batch revoke "{{ item.split(',')[0] | trim }}"
   args:
     chdir: //{{ base_directory }}/easy-rsa/
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
 - name: Removing client certificate revocation list from pki
@@ -11,8 +11,10 @@
     state: absent
     path: /{{ base_directory }}/easy-rsa/pki/crl.pem
 
-- name: Creating client certificate revocation list 
-  shell: EASYRSA_CRL_DAYS=3650 ./easyrsa gen-crl
+- name: Creating client certificate revocation list
+  command: ./easyrsa gen-crl
+  environment:
+    EASYRSA_CRL_DAYS: 3650
   args:
     chdir: //{{ base_directory }}/easy-rsa/
     creates: /{{ base_directory }}/easy-rsa/pki/crl.pem
@@ -32,41 +34,41 @@
   file:
     state: absent
     path: "/{{ base_directory }}/easy-rsa/pki/reqs/{{ item }}.req"
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
-- name: Removing client certificate 
+- name: Removing client certificate
   file:
     state: absent
     path: "/{{ base_directory }}/{{ item }}.crt"
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
 - name: Removing client certificate from pki directory
   file:
     state: absent
     path: "/{{ base_directory }}/easy-rsa/pki/issued/{{ item }}.crt"
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
 - name: Removing client key
   file:
     state: absent
     path: "/{{ base_directory }}/{{ item }}.key"
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
 - name: Removing client key from pki directory
   file:
     state: absent
     path: "/{{ base_directory }}/easy-rsa/pki/private/{{ item }}.key"
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
-- name: Removing client.ovpn key 
+- name: Removing client.ovpn key
   file:
     state: absent
     path: "/{{ base_directory }}/{{ item }}.ovpn"
-  with_items: "{{ lookup('file', 'revokelist').split('\n') }}"
+  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 ...

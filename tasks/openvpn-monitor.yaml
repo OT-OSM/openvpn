@@ -1,5 +1,6 @@
+---
 - name: Installing  required packages for ubuntu & Debian
-  apt: name="{{ packages }}" update_cache=yes state=latest
+  apt: name="{{ packages }}" update_cache=yes state=present
   vars:
     packages:
     - apache2
@@ -14,7 +15,7 @@
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: Installing required packages for Redhat & Centos
-  yum: name="{{ packages }}" update_cache=yes state=latest
+  yum: name="{{ packages }}" update_cache=yes state=present
   vars:
     packages:
     - httpd
@@ -32,14 +33,14 @@
 
 - name: Creating a file in apache2 directory for ubuntu & Debian
   file:
-    path: /etc/apache2/conf-available/openvpn-monitor.conf
+    path: "{{ apache-dir-ubuntu }}"
     state: touch
     mode: "u=rw,g=r,o=r"
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: Creating a file in apache2 directory for Redhat & Centos
   file:
-    path: /etc/httpd/conf.d/openvpn-monitor.conf
+    path: "{{ apache-dir-centos }}"
     state: touch
     mode: "u=rw,g=r,o=r"
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
@@ -48,23 +49,23 @@
   file:
     path: /var/www/html/index.html
     state: absent
-  
+
 - name: configuring apache2 for openvpn-monitor for ubuntu & Debian
   lineinfile:
-    path: /etc/apache2/conf-available/openvpn-monitor.conf
+    path: "{{ apache-dir-ubuntu }}"
     insertafter: EOF
     line: 'WSGIScriptAlias /openvpn-monitor /var/www/html/openvpn-monitor/openvpn-monitor.py'
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: configuring apache2 for openvpn-monitor for Redhat & Centos
   lineinfile:
-    path: /etc/httpd/conf.d/openvpn-monitor.conf
+    path: "{{ apache-dir-centos }}"
     insertafter: EOF
-    line: 'WSGIScriptAlias /openvpn-monitor /var/www/html/openvpn-monitor/openvpn-monitor.py'   
+    line: 'WSGIScriptAlias /openvpn-monitor /var/www/html/openvpn-monitor/openvpn-monitor.py'
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
 
 - name: enable openvpn-monitor configuration ubuntu & Debian
-  shell: a2enconf openvpn-monitor
+  command: a2enconf openvpn-monitor
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: Creating openvpn-monitor directory
@@ -74,7 +75,7 @@
 
 - name: Cloning Openvpn-monitor source-code
   git:
-    repo: 'https://github.com/furlongm/openvpn-monitor.git'
+    repo: "{{ openvpn-monitor-giturl }}"
     dest: /var/www/html/openvpn-monitor/
     version: master
 
@@ -83,6 +84,6 @@
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: restart httpd for Redhat & Centos
-  service: name=httpd state=restarted 
+  service: name=httpd state=restarted
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
 ...
