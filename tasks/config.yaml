@@ -1,40 +1,39 @@
 ---
 - name: Copy the sample template of server configuration
-  template: 
+  template:
   args:
     src: server.conf.j2
-    dest: /{{ base_directory }}/server.conf 
+    dest: /{{ base_directory }}/server.conf
 
 - name: Copy the sample template of client configuration
-  template: 
+  template:
   args:
     src: client.conf.j2
     dest: /{{ base_directory }}/client.conf
 
 - name: Indicating PORT & PROTOCOL in server.conf
-  lineinfile: 
+  lineinfile:
     dest: /{{ base_directory }}/server.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
-    state: present  
+    state: present
   with_items:
-  - { regexp: 'port 1194', line: 'port {{PORT}}' }
-  - { regexp: 'proto udp', line: 'proto {{PROTOCOL}}' }
+  - { regexp: 'port 1194', line: 'port {{ PORT }}' }
+  - { regexp: 'proto udp', line: 'proto {{ PROTOCOL }}' }
 
 - name: Getting public IP for client.conf
-  shell: curl wgetip.com warn=no 
-  register: public_ip
+  ipify_facts:
 
 - name: Indicating PORT & PROTOCOL in client.conf
-  lineinfile: 
+  lineinfile:
     dest: /{{ base_directory }}/client.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
-    state: present 
+    state: present
   with_items:
-  - { regexp: 'proto udp', line: 'proto {{PROTOCOL}}' }
-  - { regexp: 'remote my-server-1 1194', line: 'remote {{ public_ip.stdout }} {{PORT}}' }
-  notify: 
+  - { regexp: 'proto udp', line: 'proto {{ PROTOCOL }}' }
+  - { regexp: 'remote my-server-1 1194', line: 'remote {{ ipify_public_ip }} {{ PORT }}' }
+  notify:
     - daemon_reload
     - starting_openvpn
 ...

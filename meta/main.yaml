@@ -1,10 +1,22 @@
+---
 galaxy_info:
-  author: sudipt sharma
-  description: sudipt.sharma@opstree.com
-  company: opstree solutions
-  license: license (GPLv2, CC-BY, etc)
-  min_ansible_version: 2.7
-  galaxy_tags: []
+  author: sudipt.sharma@opstree.com
+  description: OpenVpn ansible role for creating a secure tunnel to your private infra.
+  company: "Opstre Solutions"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.1
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+  galaxy_tags:
+        - vpn
+        - tunnel
+        - system
+        - networking
   dependencies: []
-  
-
+...

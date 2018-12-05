@@ -9,8 +9,8 @@
   sysctl:
     name: net.ipv4.ip_forward
     value: 1
-    sysctl_set: yes 
-    state: present 
+    sysctl_set: yes
+    state: present
     reload: yes
 
 - name: Disabling Selinux for Redhat & Centos
@@ -23,16 +23,16 @@
     table: nat
     action: append
     chain: POSTROUTING
-    source: "{{openvpn_server_network}}/24"
-    out_interface: eth0 
+    source: "{{ openvpn_server_network }}/24"
+    out_interface: eth0
     jump: MASQUERADE
     comment: "Perform NAT readdressing"
 
 - name: save iptables
-  shell: netfilter-persistent save
+  command: netfilter-persistent save
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: reload iptables
-  shell: netfilter-persistent reload
+  command: netfilter-persistent reload
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 ...
