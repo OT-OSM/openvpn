@@ -115,15 +115,11 @@ Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 After installing go to network settings
 
-![network](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg)
-
-testing
-
 <img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="350" width="700">
 
 Add VPN to your network settings
 
-![addvpn](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg)
+<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg" height="350" width="700">
 
 Then VPN settings and add browse your client.ovpn
 
