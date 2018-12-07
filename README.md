@@ -119,7 +119,7 @@ After installing go to network settings
 
 Add VPN to your network settings
 
-![addvpn](./media/addvpn.jpg)
+![addvpn](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg)
 
 Then VPN settings and add browse your client.ovpn
 
