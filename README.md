@@ -92,10 +92,6 @@ Example Playbook
 
 ```
 
-## License 
-* MIT / BSD
-
-
 Client keys
 -----------
 
@@ -159,6 +155,8 @@ OpenVPN-Monitor Management Console
 
 - To Access the management console  http://public_ip/openvpn-monitor/
 
+## License
+* MIT / BSD
 
 Known Issues
 ------------
