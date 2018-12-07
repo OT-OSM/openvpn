@@ -118,7 +118,7 @@ After installing go to network settings
 ![network](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg)
 
 testing
-![network]<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="800" width="700">
+![network]<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="700" width="800">
 
 Add VPN to your network settings
 
