@@ -115,15 +115,15 @@ Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 After installing go to network settings
 
-![network](./media/vpn.jpg)
+![network](https://github.com/OT-OSM/openvpn/blob/master/media/vpn.jpg)
 
 Add VPN to your network settings
 
-![addvpn](./media/addvpn.jpg)
+![addvpn](https://github.com/OT-OSM/openvpn/blob/master/media/addvpn.jpg)
 
 Then VPN settings and add browse your client.ovpn
 
-![client](./media/client.png)
+![client](https://github.com/OT-OSM/openvpn/blob/master/media/client.png)
 
 Install Openvpn GUI for ubuntu 16.04 xenial
 
@@ -133,19 +133,19 @@ Install Openvpn GUI for ubuntu 16.04 xenial
 
 After installing go to network settings
 
-![add_connection](./media/add_connection.png)
+![add_connection](https://github.com/OT-OSM/openvpn/blob/master/media/add_connection.png)
 
 Add .ovpn file to your network settings
 
-![import_file](./media/import_file.png)
+![import_file](https://github.com/OT-OSM/openvpn/blob/master/media/import_file.png)
 
 Then select the .client.ovpn file.
 
-![select_file](./media/select_file.png)
+![select_file](https://github.com/OT-OSM/openvpn/blob/master/media/select_file.png)
 
 Then save the client.ovpn file.
 
-![save_key](./media/save_key.png)
+![save_key](https://github.com/OT-OSM/openvpn/blob/master/media/save_key.png)
 
 
 
