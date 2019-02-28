@@ -5,7 +5,7 @@ stages:
   - yaml-lint
   - ansible-lint
 
-ymal_lint:
+yaml_lint:
   stage: yaml-lint
   image: opstree/docker:ansible-lint
   script:
