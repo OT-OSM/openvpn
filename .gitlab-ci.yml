@@ -2,19 +2,19 @@
 # -*- coding: utf-8 -*-
 
 stages:
-  - ansible-lint
   - yaml-lint
-
-ansible_lint:
-  stage: ansible-lint
-  image: opstree/docker:ansible-lint
-  script:
-    - ansible-lint .
+  - ansible-lint
 
 ymal_lint:
   stage: yaml-lint
   image: opstree/docker:ansible-lint
   script:
    - yamllint .
+
+ansible_lint:
+  stage: ansible-lint
+  image: opstree/docker:ansible-lint
+  script:
+    - ansible-lint .
 ...
 
