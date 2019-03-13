@@ -33,14 +33,14 @@
 
 - name: Creating a file in apache2 directory for ubuntu & Debian
   file:
-    path: "{{ apache-dir-ubuntu }}"
+    path: "{{ apache_dir_ubuntu }}"
     state: touch
     mode: "u=rw,g=r,o=r"
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: Creating a file in apache2 directory for Redhat & Centos
   file:
-    path: "{{ apache-dir-centos }}"
+    path: "{{ apache_dir_centos }}"
     state: touch
     mode: "u=rw,g=r,o=r"
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
@@ -52,14 +52,14 @@
 
 - name: configuring apache2 for openvpn-monitor for ubuntu & Debian
   lineinfile:
-    path: "{{ apache-dir-ubuntu }}"
+    path: "{{ apache_dir_ubuntu }}"
     insertafter: EOF
     line: 'WSGIScriptAlias /openvpn-monitor /var/www/html/openvpn-monitor/openvpn-monitor.py'
   when: ansible_distribution == "Ubuntu" or ansible_distribution=="Debian"
 
 - name: configuring apache2 for openvpn-monitor for Redhat & Centos
   lineinfile:
-    path: "{{ apache-dir-centos }}"
+    path: "{{ apache_dir_centos }}"
     insertafter: EOF
     line: 'WSGIScriptAlias /openvpn-monitor /var/www/html/openvpn-monitor/openvpn-monitor.py'
   when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
@@ -75,7 +75,7 @@
 
 - name: Cloning Openvpn-monitor source-code
   git:
-    repo: "{{ openvpn-monitor-giturl }}"
+    repo: "{{ openvpn_monitor_giturl }}"
     dest: /var/www/html/openvpn-monitor/
     version: master
 
