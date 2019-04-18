@@ -2,7 +2,7 @@
 - name: Revoking OpenVPN Client certificate and key pair
   command: ./easyrsa --batch revoke "{{ item.split(',')[0] | trim }}"
   args:
-    chdir: //{{ base_directory }}/easy-rsa/
+    chdir: /{{ base_directory }}/easy-rsa/
   with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
   ignore_errors: true
 
@@ -16,7 +16,7 @@
   environment:
     EASYRSA_CRL_DAYS: 3650
   args:
-    chdir: //{{ base_directory }}/easy-rsa/
+    chdir: /{{ base_directory }}/easy-rsa/
     creates: /{{ base_directory }}/easy-rsa/pki/crl.pem
 
 - name: Removing client certificate revocation list from base directory
