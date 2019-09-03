@@ -160,3 +160,14 @@ Known Issues
 
 There are issues in client_keys.yaml and revoke.yaml, when there is no content in revokelist the revoke.yaml will through error as it woudn't find any values. Similarily with clientlist.
 but the role is working properly, no issues in that.
+
+## Author Information
+
+* Sudipt Sharma
+* sudipt.sharma@opstree.com
+(https://www.opstree.com/)
+
+## QA
+
+* Ekansh Jain
+* ekansh.jain@opstree.com
