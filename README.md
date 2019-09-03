@@ -91,6 +91,7 @@ Example Playbook
 ...
 
 ```
+
 Client keys
 -----------
 
@@ -115,15 +116,15 @@ Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 After installing go to network settings
 
-![network](./media/vpn.jpg)
+<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="350" width="700">
 
 Add VPN to your network settings
 
-![addvpn](./media/addvpn.jpg)
+<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg" height="450" width="700">
 
 Then VPN settings and add browse your client.ovpn
 
-![client](./media/client.png)
+![client](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/client.png)
 
 Install Openvpn GUI for ubuntu 16.04 xenial
 
@@ -133,19 +134,19 @@ Install Openvpn GUI for ubuntu 16.04 xenial
 
 After installing go to network settings
 
-![add_connection](./media/add_connection.png)
+![add_connection](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/add_connection.png)
 
 Add .ovpn file to your network settings
 
-![import_file](./media/import_file.png)
+![import_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/import_file.png)
 
 Then select the .client.ovpn file.
 
-![select_file](./media/select_file.png)
+![select_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/select_file.png)
 
 Then save the client.ovpn file.
 
-![save_key](./media/save_key.png)
+![save_key](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/save_key.png)
 
 
 
@@ -154,6 +155,8 @@ OpenVPN-Monitor Management Console
 
 - To Access the management console  http://public_ip/openvpn-monitor/
 
+## License
+* MIT / BSD
 
 Known Issues
 ------------
