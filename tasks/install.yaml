@@ -10,38 +10,38 @@
   yum:
     name: "{{ epel_repo }}"
     state: present
-  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
+  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat" or ansible_distribution == "Amazon"
 
 - name: Install EPEL for for Redhat & Centos
   package:
     name: epel-release
     state: present
-  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
+  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat" or ansible_distribution == "Amazon"
 
 - name: Install openvpn for Redhat & Centos
   yum:
     name: openvpn
     state: present
-  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
+  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat" or ansible_distribution == "Amazon"
 
 - name: Ensure group 'nogroup' is present
   group:
     name: nogroup
     state: present
     system: yes
-  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
+  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat" or ansible_distribution == "Amazon"
 
 - name: Changing the ownership of openvpn client for Redhat & Centos
   file:
     path: /etc/openvpn/client
     owner: root
     group: root
-  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
+  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat" or ansible_distribution == "Amazon"
 
 - name: Changing the ownership of openvpn server for Redhat & Centos
   file:
     path: /etc/openvpn/server
     owner: root
     group: root
-  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat"
+  when: ansible_distribution == "CentOS" or ansible_distribution=="RedHat" or ansible_distribution == "Amazon"
 ...
