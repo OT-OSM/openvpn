@@ -4,6 +4,7 @@
   args:
     chdir: /{{ base_directory }}/easy-rsa/
   with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  changed_when: false
 
 - name: Removing client certificate revocation list from pki
   file:
