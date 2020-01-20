@@ -12,7 +12,7 @@ Version History
 |**9 October 2018** | v.1.1 | Updated Readme | Sudipt Sharma |
 |**13 November 2018** | v.1.1 | Updated for RHEL | Sudipt Sharma |
 |**28 February 2019** | v.1.1 | Added Gitlab-CI | Mahesh Kumar |
-|**31 May 2019** | v.1.1 | Added molecule Test-cases | Mahesh Kumar |
+|**31 May 2019** | v.1.1 | Added molecule Test-cases | Ekansh Jain |
 |**13 January 2020** | v.1.1 | Updated for AMAZON | Sudipt Sharma |
 
 Salient Features
@@ -95,14 +95,14 @@ osm_openvpn
 Role Variables
 --------------
 
-|**Variables**| **Default Values**| **Description**|
-|----------|---------|---------------|
-| server_name | server | OpenVPN server Name |
-| PROTOCOL | udp | The protocaol on which the server will work |
-| PORT | udp | The port on which the server will work |
-| openvpn_server_network | 10.8.0.0 | CIDR range given to vpn network |
-| base_directory | /etc/openvpn | Configuration path of openvpn server |
-| easy_rsa_url | url | URL to download Easy RSA |
+|**Variables**| **Default Values**| **Description**| **Type**|
+|----------|---------|---------------|-----------|
+| server_name | server | OpenVPN server Name | Optional |
+| PROTOCOL | udp | The protocaol on which the server will work | Mandatory |
+| PORT | udp | The port on which the server will work | Mandatory |
+| openvpn_server_network | 10.8.0.0 | CIDR range given to vpn network | Optional |
+| base_directory | /etc/openvpn | Configuration path of openvpn server | Optional |
+| easy_rsa_url | url | URL to download Easy RSA | Optional |
 
 Example Playbook
 ----------------
