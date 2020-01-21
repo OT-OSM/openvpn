@@ -1,12 +1,23 @@
-#
+Ansible Role: OpenVPN
+=========
+An ansible role to install and configure OpenVPN server.
 
-OpenVPN Role
-============
+Version History
+---------------
 
-- I am a Utility which will create a OpenVPN setup along with a management console.
+|**Date**| **Version**| **Description**| **Changed By** |
+|----------|---------|---------------|-----------------|
+|**16 August 2018** | v.1.0 | Initial Draft | Yashvinder Hooda |
+|**8 September 2018** | v.1.1 | Added Role for Debian | Sudipt Sharma |
+|**9 October 2018** | v.1.1 | Updated Readme | Sudipt Sharma |
+|**13 November 2018** | v.1.1 | Updated for RHEL | Sudipt Sharma |
+|**28 February 2019** | v.1.1 | Added Gitlab-CI | Mahesh Kumar |
+|**31 May 2019** | v.1.1 | Added molecule Test-cases | Ekansh Jain |
+|**13 January 2020** | v.1.1 | Updated for AMAZON | Sudipt Sharma |
 
-- This role will setup openvpn server on Ubuntu, 16.04 LTS, amd64 xenial on AWS Cloud.
-
+Salient Features
+----------------
+- This Role automates the VPN setup using OpenVPN.
 The role consist of two meta files
 - clientlist: Enter the namer of the client you want to add.
 - revokelist: Enter the names of the client you want to revoke.
@@ -17,6 +28,19 @@ The role consist of two meta files
      > From the list of instances, select the VPN instance and then Networking->Change Source/Dest. 
      > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
      > server will not be able to connect to your other EC2 instances.
+
+Supported OS
+------------
+  * CentOS:7
+  * CentOS:6
+  * Ubuntu:bionic
+  * Ubuntu:xenial
+  * Amazon AMI
+
+Dependencies
+------------
+* None :)
+
 
 Directory Layout
 ----------------
@@ -31,9 +55,24 @@ osm_openvpn
 ├── handlers
 │   └── main.yml
 ├── media
+│   ├── add_connection.png
 │   ├── addvpn.jpg
 │   ├── client.png
+│   ├── import_file.png
+│   ├── save_key.png
+│   ├── select_file.png
 │   └── vpn.jpg
+├── meta
+│   └── main.yaml
+├── molecule
+│   └── default
+│       ├── Dockerfile.j2
+│       ├── INSTALL.rst
+│       ├── molecule.yml
+│       ├── playbook.yml
+│       └── tests
+│           ├── test_default.py
+│           └── test_default.pyc
 ├── README.md
 ├── revokelist
 ├── tasks
@@ -43,40 +82,27 @@ osm_openvpn
 │   ├── firewall.yaml
 │   ├── install.yaml
 │   ├── main.yaml
-│   ├── openvpn-monitor.yaml
 │   ├── revoke.yaml
 │   └── server_keys.yaml
 └── templates
     ├── before.rules.j2
     ├── client.conf.j2
     └── server.conf.j2
-
-6 directories, 21 files
-
+10 directories, 31 files
 
 ```
 
 Role Variables
 --------------
 
-The variables that can be passed to this role and a brief description about them are as follows.
-
-```sh
----
-# Enter name of Server
-server_name: "server"
-# Enter PROTOCOL on which OpenVpn will work
-PROTOCOL: "udp"
-# Enter PORT on which OpenVpn will work
-PORT: "1194"
-# Enter Server network on which OpenVpn will work
-openvpn_server_network: "10.8.0.0"
-base_directory: "etc/openvpn"
-easy_rsa_url: "https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.4/EasyRSA-3.0.4.tgz"
-...
-
-
-```
+|**Variables**| **Default Values**| **Description**| **Type**|
+|----------|---------|---------------|-----------|
+| server_name | server | OpenVPN server Name | Optional |
+| PROTOCOL | udp | The protocaol on which the server will work | Mandatory |
+| PORT | udp | The port on which the server will work | Mandatory |
+| openvpn_server_network | 10.8.0.0 | CIDR range given to vpn network | Optional |
+| base_directory | /etc/openvpn | Configuration path of openvpn server | Optional |
+| easy_rsa_url | url | URL to download Easy RSA | Optional |
 
 Example Playbook
 ----------------
@@ -84,13 +110,23 @@ Example Playbook
 ---
 - name: It will automate OpenVPN setup
   hosts: server
-  become_user: root
-  gather_facts: true
+  become: true
   roles:
     - role: osm_openvpn
 ...
 
+$  ansible-playbook site.yml -i inventory
+
 ```
+
+Inventory
+----------
+An inventory should look like this:-
+```ini
+[server]                 
+192.xxx.x.xxx    ansible_user=ubuntu 
+```
+
 
 Client keys
 -----------
@@ -149,27 +185,19 @@ Then save the client.ovpn file.
 ![save_key](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/save_key.png)
 
 
+Future Proposed Changes
+-----------------------
+- Fix the role to run on bare metal
 
-OpenVPN-Monitor Management Console
-----------------------------------
-
-- To Access the management console  http://public_ip/openvpn-monitor/
+References
+----------
+- **[Source Code](https://openvpn.net/)**
+- **[Guide Followed](https://www.cyberciti.biz/faq/ubuntu-18-04-lts-set-up-openvpn-server-in-5-minutes/)**
 
 ## License
 * MIT / BSD
-
-Known Issues
-------------
-
-There are issues in client_keys.yaml and revoke.yaml, when there is no content in revokelist the revoke.yaml will through error as it woudn't find any values. Similarily with clientlist.
-but the role is working properly, no issues in that.
 
 ## Author Information
 
 * Sudipt Sharma
 * sudipt.sharma@opstree.com
-
-## QA
-
-* Ekansh Jain
-* ekansh.jain@opstree.com

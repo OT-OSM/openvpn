@@ -25,13 +25,4 @@
 
 - name: Including firewall.yaml for OpenVPN setup
   include: firewall.yaml
-
-- name: Verifying openvpn-monitor exist
-  stat:
-    path: "/etc/apache2/conf-available/openvpn-monitor.conf"
-  register: monitor
-
-- name: Including openvpn-monitor.yaml for OpenVPN setup
-  include: openvpn-monitor.yaml
-  when: not monitor.stat.exists
 ...
