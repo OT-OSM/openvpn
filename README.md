@@ -14,6 +14,7 @@ Version History
 |**28 February 2019** | v.1.1 | Added Gitlab-CI | Mahesh Kumar |
 |**31 May 2019** | v.1.1 | Added molecule Test-cases | Ekansh Jain |
 |**13 January 2020** | v.1.1 | Updated for AMAZON | Sudipt Sharma |
+|**11 February 2020** | v.1.1 | Added tags for client create & revoke  | Sudipt Sharma |
 
 Salient Features
 ----------------
@@ -116,6 +117,19 @@ Example Playbook
 ...
 
 $  ansible-playbook site.yml -i inventory
+
+```
+- For generating client keys
+
+```sh
+$  ansible-playbook site.yml -i inventory --tags "generate_client_keys"
+
+```
+
+- For revoking client keys
+
+```sh
+$  ansible-playbook site.yml -i inventory --tags "revoke_client_keys"
 
 ```
 
