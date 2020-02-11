@@ -21,7 +21,7 @@
   include: client_keys.yaml
   tags:
   - generate_client_keys
-  
+
 - name: Including revoke.yaml for OpenVpn setup
   include: revoke.yaml
   tags:
