@@ -19,9 +19,13 @@
 
 - name: Including client_keys.yaml for OpenVPN setup
   include: client_keys.yaml
+  tags:
+  - generate_client_keys
 
 - name: Including revoke.yaml for OpenVpn setup
   include: revoke.yaml
+  tags:
+  - revoke_client_keys
 
 - name: Including firewall.yaml for OpenVPN setup
   include: firewall.yaml
