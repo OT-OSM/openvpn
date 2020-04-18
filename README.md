@@ -1,5 +1,9 @@
 Ansible Role: OpenVPN
 =========
+
+[![CircleCI](https://circleci.com/gh/OT-OSM/openvpn/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/OT-OSM/openvpn?branch=master)
+
+
 [![Opstree Solutions][opstree_avatar]][opstree_homepage]<br/>[Opstree Solutions][opstree_homepage] 
 
   [opstree_homepage]: https://opstree.github.io/
@@ -11,14 +15,15 @@ Version History
 
 |**Date**| **Version**| **Description**| **Changed By** |
 |----------|---------|---------------|-----------------|
-|**16 August 2018** | v.1.0 | Initial Draft | Yashvinder Hooda |
-|**8 September 2018** | v.1.1 | Added Role for Debian | Sudipt Sharma |
-|**9 October 2018** | v.1.1 | Updated Readme | Sudipt Sharma |
-|**13 November 2018** | v.1.1 | Updated for RHEL | Sudipt Sharma |
-|**28 February 2019** | v.1.1 | Added Gitlab-CI | Mahesh Kumar |
-|**31 May 2019** | v.1.1 | Added molecule Test-cases | Ekansh Jain |
-|**13 January 2020** | v.1.1 | Updated for AMAZON | Sudipt Sharma |
-|**11 February 2020** | v.1.1 | Added tags for client create & revoke  | Sudipt Sharma |
+|**16 August 2018** | v.1.0.0 | Initial Draft | Yashvinder Hooda |
+|**8 September 2018** | v.1.0.0 | Added Role for Debian | Sudipt Sharma |
+|**9 October 2018** | v.1.0.0 | Updated Readme | Sudipt Sharma |
+|**13 November 2018** | v.1.0.0 | Updated for RHEL | Sudipt Sharma |
+|**28 February 2019** | v.1.0.0 | Added Gitlab-CI | Mahesh Kumar |
+|**31 May 2019** | v.1.0.0 | Added molecule Test-cases | Ekansh Jain |
+|**13 January 2020** | v.1.0.0 | Updated for AMAZON | Sudipt Sharma |
+|**11 February 2020** | v.1.0.0 | Added tags for client create & revoke  | Sudipt Sharma |
+|**18th April 2020** | v.1.0.0 | Integrated circle-ci | Sudipt Sharma |
 
 Salient Features
 ----------------
