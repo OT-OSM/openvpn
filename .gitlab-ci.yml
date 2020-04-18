@@ -18,4 +18,3 @@ ansible_lint:
   script:
     - ansible-lint .
 ...
-
