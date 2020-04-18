@@ -1,5 +1,9 @@
 Ansible Role: OpenVPN
 =========
+[![Opstree Solutions][opstree_avatar]][opstree_homepage]<br/>[Opstree Solutions][opstree_homepage] 
+
+  [opstree_homepage]: https://opstree.github.io/
+  [opstree_avatar]: https://img.cloudposse.com/150x150/https://github.com/opstree.png
 An ansible role to install and configure OpenVPN server.
 
 Version History
@@ -213,5 +217,9 @@ References
 
 ## Author Information
 
-* Sudipt Sharma
-* sudipt.sharma@opstree.com
+### Contributors
+
+[![Sudipt Sharma][sudipt_avatar]][sudipt_homepage]<br/>[Sudipt Sharma][sudipt_homepage] 
+
+  [sudipt_homepage]: https://github.com/iamsudipt
+  [sudipt_avatar]: https://img.cloudposse.com/75x75/https://github.com/iamsudipt.png
