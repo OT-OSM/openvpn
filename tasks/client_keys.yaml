@@ -4,7 +4,7 @@
   args:
     chdir: /etc/openvpn/easy-rsa/
     creates: "/etc/openvpn/easy-rsa/pki/issued/{{ item }}.crt"
-  with_items: "{{ lookup('file', 'clientlist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ client_list }}').splitlines() }}"
   ignore_errors: true
 
 - name: Creating certificate revocation list
@@ -28,7 +28,7 @@
     src: "/{{ base_directory }}/easy-rsa/pki/private/{{ item }}.key"
     dest: /{{ base_directory }}
     remote_src: yes
-  with_items: "{{ lookup('file', 'clientlist').splitlines() | trim }}"
+  with_items: "{{ lookup('file', '{{ client_list }}').splitlines() | trim }}"
   ignore_errors: true
 
 - name: Copying client certificate to openvpn directory
@@ -36,7 +36,7 @@
     src: "/{{ base_directory }}/easy-rsa/pki/issued/{{ item }}.crt"
     dest: /{{ base_directory }}
     remote_src: yes
-  with_items: "{{ lookup('file', 'clientlist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ client_list }}').splitlines() }}"
   ignore_errors: true
 
 - name: Copying the sample script to generate client keys
@@ -51,7 +51,7 @@
   args:
     chdir: /{{ base_directory }}/
     creates: /{{ base_directory }}/"{{ item }}".ovpn
-  with_items: "{{ lookup('file', 'clientlist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ client_list }}').splitlines() }}"
   ignore_errors: true
 
 - name: Copying the client.ovpn to localhost
@@ -59,6 +59,6 @@
     src: "/{{ base_directory }}/{{ item }}.ovpn"
     dest: /tmp/
     flat: yes
-  with_items: "{{ lookup('file', 'clientlist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ client_list }}').splitlines() }}"
   ignore_errors: true
 ...
