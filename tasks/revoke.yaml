@@ -3,7 +3,7 @@
   command: ./easyrsa --batch revoke "{{ item.split(',')[0] | trim }}"
   args:
     chdir: /{{ base_directory }}/easy-rsa/
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
   changed_when: false
 
 - name: Removing client certificate revocation list from pki
@@ -34,35 +34,35 @@
   file:
     state: absent
     path: "/{{ base_directory }}/easy-rsa/pki/reqs/{{ item }}.req"
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
 
 - name: Removing client certificate
   file:
     state: absent
     path: "/{{ base_directory }}/{{ item }}.crt"
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
 
 - name: Removing client certificate from pki directory
   file:
     state: absent
     path: "/{{ base_directory }}/easy-rsa/pki/issued/{{ item }}.crt"
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
 
 - name: Removing client key
   file:
     state: absent
     path: "/{{ base_directory }}/{{ item }}.key"
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
 
 - name: Removing client key from pki directory
   file:
     state: absent
     path: "/{{ base_directory }}/easy-rsa/pki/private/{{ item }}.key"
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
 
 - name: Removing client.ovpn key
   file:
     state: absent
     path: "/{{ base_directory }}/{{ item }}.ovpn"
-  with_items: "{{ lookup('file', 'revokelist').splitlines() }}"
+  with_items: "{{ lookup('file', '{{ revoke_list }}').splitlines() }}"
 ...
