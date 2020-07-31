@@ -113,6 +113,9 @@ Role Variables
 | openvpn_server_network | 10.8.0.0 | CIDR range given to vpn network | Optional |
 | base_directory | /etc/openvpn | Configuration path of openvpn server | Optional |
 | easy_rsa_url | url | URL to download Easy RSA | Optional |
+| block_all_connection | false | Block all communication for openvpn client | Optional |
+| port_list | [80,443] | Allow specific ports for openvpn client & only applicable if block_all_connection == true | Optional |
+
 
 Example Playbook
 ----------------
