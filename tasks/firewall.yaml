@@ -38,7 +38,7 @@
     destination_port: "{{ item }}"
     in_interface: tun0
     comment: "Perform Ports Allow for openvpn client"
-  when: block_all_connection == true
+  when: block_all_connection
   with_items:
     - "{{ port_list }}"
 
@@ -51,7 +51,7 @@
     jump: DROP
     in_interface: tun0
     comment: "Perform all communication blocking for openvpn client"
-  when: block_all_connection == true
+  when: block_all_connection
 
 
 - name: save iptables
