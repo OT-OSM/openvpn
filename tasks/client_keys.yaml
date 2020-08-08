@@ -21,13 +21,13 @@
     dest: /{{ base_directory }}
     owner: nobody
     group: nogroup
-    remote_src: yes
+    remote_src: true
 
 - name: Copying client keys to openvpn directory
   copy:
     src: "/{{ base_directory }}/easy-rsa/pki/private/{{ item }}.key"
     dest: /{{ base_directory }}
-    remote_src: yes
+    remote_src: true
   with_items: "{{ lookup('file', '{{ client_list }}').splitlines() | trim }}"
   ignore_errors: true
 
@@ -35,7 +35,7 @@
   copy:
     src: "/{{ base_directory }}/easy-rsa/pki/issued/{{ item }}.crt"
     dest: /{{ base_directory }}
-    remote_src: yes
+    remote_src: true
   with_items: "{{ lookup('file', '{{ client_list }}').splitlines() }}"
   ignore_errors: true
 
@@ -58,7 +58,7 @@
   fetch:
     src: "/{{ base_directory }}/{{ item }}.ovpn"
     dest: /tmp/
-    flat: yes
+    flat: true
   with_items: "{{ lookup('file', '{{ client_list }}').splitlines() }}"
   ignore_errors: true
 ...

@@ -28,7 +28,7 @@
   copy:
     src: /{{ base_directory }}/easy-rsa/pki/crl.pem
     dest: /{{ base_directory }}/crl.pem
-    remote_src: yes
+    remote_src: true
 
 - name: Removing client certificate request
   file:

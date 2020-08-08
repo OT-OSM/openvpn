@@ -53,10 +53,10 @@
   copy:
     src: "{{ item }}"
     dest: /{{ base_directory }}
-    remote_src: yes
+    remote_src: true
   with_items:
-  - /{{ base_directory }}/easy-rsa/pki/ca.crt
-  - /{{ base_directory }}/easy-rsa/pki/issued/{{ server_name }}.crt
-  - /{{ base_directory }}/easy-rsa/pki/private/{{ server_name }}.key
-  - /{{ base_directory }}/easy-rsa/pki/dh.pem
+    - /{{ base_directory }}/easy-rsa/pki/ca.crt
+    - /{{ base_directory }}/easy-rsa/pki/issued/{{ server_name }}.crt
+    - /{{ base_directory }}/easy-rsa/pki/private/{{ server_name }}.key
+    - /{{ base_directory }}/easy-rsa/pki/dh.pem
 ...

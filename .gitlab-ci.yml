@@ -9,7 +9,7 @@ yaml_lint:
   stage: yaml-lint
   image: opstree/docker:ansible-lint
   script:
-   - yamllint ./*/*.yml
+    - yamllint ./*/*.yml
   allow_failure: true
 
 ansible_lint:

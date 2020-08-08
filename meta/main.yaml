@@ -14,9 +14,9 @@ galaxy_info:
         - xenial
         - bionic
   galaxy_tags:
-        - vpn
-        - tunnel
-        - system
-        - networking
+    - vpn
+    - tunnel
+    - system
+    - networking
   dependencies: []
 ...

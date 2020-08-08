@@ -9,9 +9,9 @@
   sysctl:
     name: net.ipv4.ip_forward
     value: 1
-    sysctl_set: yes
+    sysctl_set: true
     state: present
-    reload: yes
+    reload: true
 
 - name: Disabling Selinux for Redhat & Centos
   selinux:
@@ -27,6 +27,32 @@
     out_interface: eth0
     jump: MASQUERADE
     comment: "Perform NAT readdressing"
+
+- name: iptables - Apply the iptable rule to Allow specific ports for openvpn client
+  iptables:
+    action: insert
+    chain: FORWARD
+    protocol: tcp
+    source: "{{ openvpn_server_network }}/24"
+    jump: ACCEPT
+    destination_port: "{{ item }}"
+    in_interface: tun0
+    comment: "Perform Ports Allow for openvpn client"
+  when: block_all_connection
+  with_items:
+    - "{{ port_list }}"
+
+- name: iptables - Block all communication
+  iptables:
+    action: append
+    protocol: tcp
+    chain: FORWARD
+    source: "{{ openvpn_server_network }}/24"
+    jump: DROP
+    in_interface: tun0
+    comment: "Perform all communication blocking for openvpn client"
+  when: block_all_connection
+
 
 - name: save iptables
   command: netfilter-persistent save

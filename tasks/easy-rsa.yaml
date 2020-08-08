@@ -3,7 +3,7 @@
   get_url:
     url: "{{ easy_rsa_url }}"
     dest: /tmp/
-    validate_certs: False
+    validate_certs: false
 
 - name: Unarchiving easy-rsa
   unarchive:
