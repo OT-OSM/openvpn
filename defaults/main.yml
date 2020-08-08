@@ -17,5 +17,5 @@ apache_dir_centos: "/etc/httpd/conf.d/openvpn-monitor.conf"
 client_list: clientlist
 revoke_list: revokelist
 block_all_connection: false
-port_list: [80,443]
+port_list: [80, 443]
 ...
