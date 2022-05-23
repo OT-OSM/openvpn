@@ -24,12 +24,14 @@ Version History
 |**13 January 2020** | v.1.0.0 | Updated for AMAZON | Sudipt Sharma |
 |**11 February 2020** | v.1.0.0 | Added tags for client create & revoke  | Sudipt Sharma |
 |**18th April 2020** | v.1.0.0 | Integrated circle-ci | Sudipt Sharma |
+|**03rd July 2021** | v.1.1.0 | Added Password authentication | Pankaj Kumar |
+|**23rd May 2023** | v.1.1.0 | Integrated Private hosted Zone  | Pankaj Kumar |
 
 Salient Features
 ----------------
 - This Role automates the VPN setup using OpenVPN.
 The role consist of two meta files
-- clientlist: Enter the namer of the client you want to add.
+- clientlist: Enter the namer of the client you want to add. (Along with password if password is enabled in variables)
 - revokelist: Enter the names of the client you want to revoke.
 
 ### Note:  
@@ -39,6 +41,12 @@ The role consist of two meta files
      > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
      > server will not be able to connect to your other EC2 instances.
 
+  - To enable Private hosted zone or pass custom DNS resolver. 
+     
+     > Add your DNS IP under /defaults/main.yaml at DNS_IP variable which is used under client.conf.j2 and server.conf.j2 .
+     > IP address of the Amazon-provided DNS servers for your VPC, which is the IP address at the base of the VPC network range "plus two." For example, if the CIDR range for your VPC is 10.0.0.0/16, the IP address of the DNS server is 10.0.0.2  
+       
+
 Supported OS
 ------------
   * CentOS:7
@@ -46,6 +54,7 @@ Supported OS
   * Ubuntu:bionic
   * Ubuntu:xenial
   * Amazon AMI
+  * Amazon Linux 2 AMI
 
 Dependencies
 ------------
@@ -91,6 +100,8 @@ osm_openvpn
 │   ├── easy-rsa.yaml
 │   ├── firewall.yaml
 │   ├── install.yaml
+│   ├── client_passwd_keys.yaml
+│   ├── password_dependency.yaml
 │   ├── main.yaml
 │   ├── revoke.yaml
 │   └── server_keys.yaml
@@ -98,7 +109,6 @@ osm_openvpn
     ├── before.rules.j2
     ├── client.conf.j2
     └── server.conf.j2
-10 directories, 31 files
 
 ```
 
@@ -113,6 +123,7 @@ Role Variables
 | openvpn_server_network | 10.8.0.0 | CIDR range given to vpn network | Optional |
 | base_directory | /etc/openvpn | Configuration path of openvpn server | Optional |
 | easy_rsa_url | url | URL to download Easy RSA | Optional |
+| password_enable | false | Enable password authentication along with file | Optional |
 | block_all_connection | false | Block all communication for openvpn client | Optional |
 | port_list | [80,443] | Allow specific ports for openvpn client & only applicable if block_all_connection == true | Optional |
 
@@ -131,6 +142,14 @@ Example Playbook
 $  ansible-playbook site.yml -i inventory
 
 ```
+Example clientlist file for password authentication
+----------------
+```
+opstree TyH76$th9I
+pankaj Abgf$56Gt
+
+```
+
 - For generating client keys
 
 ```sh
@@ -178,15 +197,15 @@ Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 After installing go to network settings
 
-<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="350" width="700">
+<img src="media/vpn.jpg" height="350" width="700">
 
 Add VPN to your network settings
 
-<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg" height="450" width="700">
+<img src="media/addvpn.jpg" height="350" width="700">
 
 Then VPN settings and add browse your client.ovpn
 
-![client](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/client.png)
+<img src="media/client.png" height="350" width="700">
 
 Install Openvpn GUI for ubuntu 16.04 xenial
 
@@ -196,19 +215,19 @@ Install Openvpn GUI for ubuntu 16.04 xenial
 
 After installing go to network settings
 
-![add_connection](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/add_connection.png)
+<img src="media/add_connection.png" height="350" width="700">
 
 Add .ovpn file to your network settings
 
-![import_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/import_file.png)
+<img src="media/import_file.png" height="350" width="700">
 
 Then select the .client.ovpn file.
 
-![select_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/select_file.png)
+<img src="media/select_file.png" height="350" width="700">
 
 Then save the client.ovpn file.
 
-![save_key](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/save_key.png)
+<img src="media/save_key.png" height="350" width="700">
 
 
 Future Proposed Changes
@@ -227,7 +246,13 @@ References
 
 ### Contributors
 
-[![Sudipt Sharma][sudipt_avatar]][sudipt_homepage]<br/>[Sudipt Sharma][sudipt_homepage] 
+<a href = "https://github.com/iamsudipt">
+  <img src = "https://img.cloudposse.com/75x75/https://github.com/iamsudipt.png"/>
+</a>&nbsp;
 
-  [sudipt_homepage]: https://github.com/iamsudipt
-  [sudipt_avatar]: https://img.cloudposse.com/75x75/https://github.com/iamsudipt.png
+<a href = "https://www.linkedin.com/in/pankaj-kumar-33bb65170">
+  <img src = "https://ca.slack-edge.com/T2AGPFQ9X-USNEVM1CN-b9585c51a347-80" height="75" width="75"/>
+</a>
+
+<a href = "https://github.com/iamsudipt"><span style="font-size:12px;">Sudipt Sharma</span></a>&nbsp;
+<a href = "https://www.linkedin.com/in/pankaj-kumar-33bb65170"><span style="font-size:12px;">Pankaj Kumar</span></a>
