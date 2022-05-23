@@ -43,7 +43,7 @@ The role consist of two meta files
 
   - To enable Private hosted zone or pass custom DNS resolver. 
      
-     > Add your DNS IP under /defaults/main.yaml at DNS_IP variable.
+     > Add your DNS IP under /defaults/main.yaml at DNS_IP variable. [ Port 53 should be allowed from your machine].  
      > For AWS Private hosted zone:- IP address of the Amazon-provided DNS servers for your VPC, which is the IP address at the base of the VPC network range "plus two." For example, if the CIDR range for your VPC is 10.0.0.0/16, the IP address of the DNS server is 10.0.0.2  
        
 
