@@ -24,7 +24,8 @@ Version History
 |**13 January 2020** | v.1.0.0 | Updated for AMAZON | Sudipt Sharma |
 |**11 February 2020** | v.1.0.0 | Added tags for client create & revoke  | Sudipt Sharma |
 |**18th April 2020** | v.1.0.0 | Integrated circle-ci | Sudipt Sharma |
-|**03rd July 2021** | v.1.0.0 | Added Password authentication | Pankaj Kumar |
+|**03rd July 2021** | v.1.1.0 | Added Password authentication | Pankaj Kumar |
+|**23rd May 2023** | v.1.1.0 | Integrated Private hosted Zone  | Pankaj Kumar |
 
 Salient Features
 ----------------
@@ -39,6 +40,12 @@ The role consist of two meta files
      > From the list of instances, select the VPN instance and then Networking->Change Source/Dest. 
      > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
      > server will not be able to connect to your other EC2 instances.
+
+  - To enable Private hosted zone or pass custom DNS resolver. 
+     
+     > Add your DNS IP under /defaults/main.yaml at DNS_IP variable which is used under client.conf.j2 and server.conf.j2 .
+     > IP address of the Amazon-provided DNS servers for your VPC, which is the IP address at the base of the VPC network range "plus two." For example, if the CIDR range for your VPC is 10.0.0.0/16, the IP address of the DNS server is 10.0.0.2  
+       
 
 Supported OS
 ------------

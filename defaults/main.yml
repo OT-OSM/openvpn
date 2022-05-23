@@ -24,4 +24,5 @@ password_enable: false
 out_interface: "eth0"
 in_interface: "tun0"
 port_list: [80, 443]
+DNS_IP: "8.8.4.4"
 ...
