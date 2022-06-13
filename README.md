@@ -24,12 +24,13 @@ Version History
 |**13 January 2020** | v.1.0.0 | Updated for AMAZON | Sudipt Sharma |
 |**11 February 2020** | v.1.0.0 | Added tags for client create & revoke  | Sudipt Sharma |
 |**18th April 2020** | v.1.0.0 | Integrated circle-ci | Sudipt Sharma |
+|**13rd June 2022** | v.1.1.0 | Integrated Private hosted Zone  | Pankaj Kumar |
 
 Salient Features
 ----------------
 - This Role automates the VPN setup using OpenVPN.
 The role consist of two meta files
-- clientlist: Enter the namer of the client you want to add.
+- clientlist: Enter the namer of the client you want to add. (Along with password if password is enabled in variables)
 - revokelist: Enter the names of the client you want to revoke.
 
 ### Note:  
@@ -38,7 +39,11 @@ The role consist of two meta files
      > From the list of instances, select the VPN instance and then Networking->Change Source/Dest. 
      > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
      > server will not be able to connect to your other EC2 instances.
-
+  - To enable Private hosted zone or pass custom DNS resolver. 
+     
+     > Add your DNS IP under /defaults/main.yaml at DNS_IP variable. [ Port 53 should be allowed from your machine].  
+     > For AWS Private hosted zone:- IP address of the Amazon-provided DNS servers for your VPC, which is the IP address at the base of the VPC network range "plus two." For example, if the CIDR range for your VPC is 10.0.0.0/16, the IP address of the DNS server is 10.0.0.2  
+       
 Supported OS
 ------------
   * CentOS:7
@@ -46,6 +51,7 @@ Supported OS
   * Ubuntu:bionic
   * Ubuntu:xenial
   * Amazon AMI
+  * Amazon Linux 2 AMI
 
 Dependencies
 ------------
@@ -59,47 +65,47 @@ osm_openvpn
 .
 ├── clientlist
 ├── defaults
-│   └── main.yml
+│   └── main.yml
 ├── files
-│   └── make_config.sh
+│   └── make_config.sh
 ├── handlers
-│   └── main.yml
+│   └── main.yml
 ├── media
-│   ├── add_connection.png
-│   ├── addvpn.jpg
-│   ├── client.png
-│   ├── import_file.png
-│   ├── save_key.png
-│   ├── select_file.png
-│   └── vpn.jpg
+│   ├── add_connection.png
+│   ├── addvpn.jpg
+│   ├── client.png
+│   ├── import_file.png
+│   ├── save_key.png
+│   ├── select_file.png
+│   └── vpn.jpg
 ├── meta
-│   └── main.yaml
+│   └── main.yaml
 ├── molecule
-│   └── default
-│       ├── Dockerfile.j2
-│       ├── INSTALL.rst
-│       ├── molecule.yml
-│       ├── playbook.yml
-│       └── tests
-│           ├── test_default.py
-│           └── test_default.pyc
+│   └── default
+│       ├── Dockerfile.j2
+│       ├── INSTALL.rst
+│       ├── molecule.yml
+│       ├── playbook.yml
+│       └── tests
+│           ├── test_default.py
+│           └── test_default.pyc
 ├── README.md
 ├── revokelist
 ├── tasks
-│   ├── client_keys.yaml
-│   ├── config.yaml
-│   ├── easy-rsa.yaml
-│   ├── firewall.yaml
-│   ├── install.yaml
-│   ├── main.yaml
-│   ├── revoke.yaml
-│   └── server_keys.yaml
+│   ├── client_keys.yaml
+│   ├── config.yaml
+│   ├── easy-rsa.yaml
+│   ├── firewall.yaml
+│   ├── install.yaml
+│   ├── client_passwd_keys.yaml
+│   ├── password_dependency.yaml
+│   ├── main.yaml
+│   ├── revoke.yaml
+│   └── server_keys.yaml
 └── templates
     ├── before.rules.j2
     ├── client.conf.j2
     └── server.conf.j2
-10 directories, 31 files
-
 ```
 
 Role Variables
@@ -115,6 +121,7 @@ Role Variables
 | easy_rsa_url | url | URL to download Easy RSA | Optional |
 | block_all_connection | false | Block all communication for openvpn client | Optional |
 | port_list | [80,443] | Allow specific ports for openvpn client & only applicable if block_all_connection == true | Optional |
+| DNS_IP | 8.8.4.4 | To enable Private hosted zone or pass custom DNS resolver | Optional |
 
 
 Example Playbook
@@ -127,22 +134,19 @@ Example Playbook
   roles:
     - role: osm_openvpn
 ...
-
 $  ansible-playbook site.yml -i inventory
-
 ```
+
 - For generating client keys
 
 ```sh
 $  ansible-playbook site.yml -i inventory --tags "generate_client_keys"
-
 ```
 
 - For revoking client keys
 
 ```sh
 $  ansible-playbook site.yml -i inventory --tags "revoke_client_keys"
-
 ```
 
 Inventory
@@ -166,7 +170,6 @@ Install OpenVpn
 
 ```sh
    apt-get install openvpn -y
-
 ```
 
 Install Openvpn GUI for ubuntu 18.04 bionic beaver
@@ -178,15 +181,15 @@ Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 After installing go to network settings
 
-<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="350" width="700">
+<img src="media/vpn.jpg" height="350" width="700">
 
 Add VPN to your network settings
 
-<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg" height="450" width="700">
+<img src="media/addvpn.jpg" height="350" width="700">
 
 Then VPN settings and add browse your client.ovpn
 
-![client](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/client.png)
+<img src="media/client.png" height="350" width="700">
 
 Install Openvpn GUI for ubuntu 16.04 xenial
 
@@ -196,19 +199,19 @@ Install Openvpn GUI for ubuntu 16.04 xenial
 
 After installing go to network settings
 
-![add_connection](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/add_connection.png)
+<img src="media/add_connection.png" height="350" width="700">
 
 Add .ovpn file to your network settings
 
-![import_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/import_file.png)
+<img src="media/import_file.png" height="350" width="700">
 
 Then select the .client.ovpn file.
 
-![select_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/select_file.png)
+<img src="media/select_file.png" height="350" width="700">
 
 Then save the client.ovpn file.
 
-![save_key](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/save_key.png)
+<img src="media/save_key.png" height="350" width="700">
 
 
 Future Proposed Changes
@@ -227,7 +230,14 @@ References
 
 ### Contributors
 
-[![Sudipt Sharma][sudipt_avatar]][sudipt_homepage]<br/>[Sudipt Sharma][sudipt_homepage] 
+<a href = "https://github.com/iamsudipt">
+  <img src = "https://img.cloudposse.com/75x75/https://github.com/iamsudipt.png"/>
+</a>&nbsp;
 
-  [sudipt_homepage]: https://github.com/iamsudipt
-  [sudipt_avatar]: https://img.cloudposse.com/75x75/https://github.com/iamsudipt.png
+<a href = "https://www.linkedin.com/in/pankaj-kumar-33bb65170">
+  <img src = "https://ca.slack-edge.com/T2AGPFQ9X-USNEVM1CN-b9585c51a347-80" height="75" width="75"/>
+</a>
+
+<a href = "https://github.com/iamsudipt"><span style="font-size:12px;">Sudipt Sharma</span></a>&nbsp;
+<a href = "https://www.linkedin.com/in/pankaj-kumar-33bb65170"><span style="font-size:12px;">Pankaj Kumar</span></a>
+
