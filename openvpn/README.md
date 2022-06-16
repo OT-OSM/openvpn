@@ -1,35 +1,15 @@
 Ansible Role: OpenVPN
 =========
 
-[![CircleCI](https://circleci.com/gh/OT-OSM/openvpn/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/OT-OSM/openvpn?branch=master)
 
 
-[![Opstree Solutions][opstree_avatar]][opstree_homepage]<br/>[Opstree Solutions][opstree_homepage] 
 
-  [opstree_homepage]: https://opstree.github.io/
-  [opstree_avatar]: https://img.cloudposse.com/150x150/https://github.com/opstree.png
-An ansible role to install and configure OpenVPN server.
-
-Version History
----------------
-
-|**Date**| **Version**| **Description**| **Changed By** |
-|----------|---------|---------------|-----------------|
-|**16 August 2018** | v.1.0.0 | Initial Draft | Yashvinder Hooda |
-|**8 September 2018** | v.1.0.0 | Added Role for Debian | Sudipt Sharma |
-|**9 October 2018** | v.1.0.0 | Updated Readme | Sudipt Sharma |
-|**13 November 2018** | v.1.0.0 | Updated for RHEL | Sudipt Sharma |
-|**28 February 2019** | v.1.0.0 | Added Gitlab-CI | Mahesh Kumar |
-|**31 May 2019** | v.1.0.0 | Added molecule Test-cases | Ekansh Jain |
-|**13 January 2020** | v.1.0.0 | Updated for AMAZON | Sudipt Sharma |
-|**11 February 2020** | v.1.0.0 | Added tags for client create & revoke  | Sudipt Sharma |
-|**18th April 2020** | v.1.0.0 | Integrated circle-ci | Sudipt Sharma |
 
 Salient Features
 ----------------
 - This Role automates the VPN setup using OpenVPN.
 The role consist of two meta files
-- clientlist: Enter the namer of the client you want to add.
+- clientlist: Enter the namer of the client you want to add. (Along with password if password is enabled in variables)
 - revokelist: Enter the names of the client you want to revoke.
 
 ### Note:  
@@ -38,6 +18,8 @@ The role consist of two meta files
      > From the list of instances, select the VPN instance and then Networking->Change Source/Dest. 
      > Check from the drop down menu. Then click Yes, Disable. This is needed as otherwise, your VPN  
      > server will not be able to connect to your other EC2 instances.
+     
+     > Write your mail id and password in /tasks/append_clientlist.yaml
 
 Supported OS
 ------------
@@ -46,6 +28,7 @@ Supported OS
   * Ubuntu:bionic
   * Ubuntu:xenial
   * Amazon AMI
+  * Amazon Linux 2 AMI
 
 Dependencies
 ------------
@@ -86,11 +69,14 @@ osm_openvpn
 ├── README.md
 ├── revokelist
 ├── tasks
+│   ├── append_clientlist.yaml
 │   ├── client_keys.yaml
 │   ├── config.yaml
 │   ├── easy-rsa.yaml
 │   ├── firewall.yaml
 │   ├── install.yaml
+│   ├── client_passwd_keys.yaml
+│   ├── password_dependency.yaml
 │   ├── main.yaml
 │   ├── revoke.yaml
 │   └── server_keys.yaml
@@ -98,7 +84,6 @@ osm_openvpn
     ├── before.rules.j2
     ├── client.conf.j2
     └── server.conf.j2
-10 directories, 31 files
 
 ```
 
@@ -113,6 +98,7 @@ Role Variables
 | openvpn_server_network | 10.8.0.0 | CIDR range given to vpn network | Optional |
 | base_directory | /etc/openvpn | Configuration path of openvpn server | Optional |
 | easy_rsa_url | url | URL to download Easy RSA | Optional |
+| password_enable | false | Enable password authentication along with file | Optional |
 | block_all_connection | false | Block all communication for openvpn client | Optional |
 | port_list | [80,443] | Allow specific ports for openvpn client & only applicable if block_all_connection == true | Optional |
 
@@ -124,17 +110,28 @@ Example Playbook
 - name: It will automate OpenVPN setup
   hosts: server
   become: true
+  no_log: true
   roles:
     - role: osm_openvpn
 ...
 
 $  ansible-playbook site.yml -i inventory
 
+
 ```
+Example clientlist file for password authentication
+----------------
+```
+opstree Opstree@1234
+
+```
+
+- 
+
 - For generating client keys
 
 ```sh
-$  ansible-playbook site.yml -i inventory --tags "generate_client_keys"
+$  ansible-playbook site.yml -i inventory --tags "append_clientlist" -e "username=username_of_client" -e "mail=mail_id_of_client" --tags "generate_client_keys"
 
 ```
 
@@ -178,15 +175,9 @@ Install Openvpn GUI for ubuntu 18.04 bionic beaver
 
 After installing go to network settings
 
-<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/vpn.jpg" height="350" width="700">
 
 Add VPN to your network settings
 
-<img src="https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/addvpn.jpg" height="450" width="700">
-
-Then VPN settings and add browse your client.ovpn
-
-![client](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/client.png)
 
 Install Openvpn GUI for ubuntu 16.04 xenial
 
@@ -194,40 +185,3 @@ Install Openvpn GUI for ubuntu 16.04 xenial
    apt install network-manager-openvpn-gnome -y
 ```
 
-After installing go to network settings
-
-![add_connection](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/add_connection.png)
-
-Add .ovpn file to your network settings
-
-![import_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/import_file.png)
-
-Then select the .client.ovpn file.
-
-![select_file](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/select_file.png)
-
-Then save the client.ovpn file.
-
-![save_key](https://raw.githubusercontent.com/OT-OSM/openvpn/master/media/save_key.png)
-
-
-Future Proposed Changes
------------------------
-- Fix the role to run on bare metal
-
-References
-----------
-- **[Source Code](https://openvpn.net/)**
-- **[Guide Followed](https://www.cyberciti.biz/faq/ubuntu-18-04-lts-set-up-openvpn-server-in-5-minutes/)**
-
-## License
-* MIT / BSD
-
-## Author Information
-
-### Contributors
-
-[![Sudipt Sharma][sudipt_avatar]][sudipt_homepage]<br/>[Sudipt Sharma][sudipt_homepage] 
-
-  [sudipt_homepage]: https://github.com/iamsudipt
-  [sudipt_avatar]: https://img.cloudposse.com/75x75/https://github.com/iamsudipt.png

@@ -1,0 +1,8 @@
+---
+- name: It will automate OpenVPN setup
+  hosts: localhost
+  become: true
+  no_log: true
+  roles:
+    - role: openvpn
+...
