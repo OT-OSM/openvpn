@@ -24,7 +24,7 @@
     action: append
     chain: POSTROUTING
     source: "{{ openvpn_server_network }}/24"
-    out_interface: eth0
+    out_interface: "{{ out_interface }}"
     jump: MASQUERADE
     comment: "Perform NAT readdressing"
 
@@ -36,7 +36,7 @@
     source: "{{ openvpn_server_network }}/24"
     jump: ACCEPT
     destination_port: "{{ item }}"
-    in_interface: tun0
+    in_interface: "{{ in_interface }}"
     comment: "Perform Ports Allow for openvpn client"
   when: block_all_connection
   with_items:
@@ -49,7 +49,7 @@
     chain: FORWARD
     source: "{{ openvpn_server_network }}/24"
     jump: DROP
-    in_interface: tun0
+    in_interface: "{{ in_interface }}"
     comment: "Perform all communication blocking for openvpn client"
   when: block_all_connection
 

@@ -1,0 +1,27 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'CLIENT_NAME')
+        string(name: 'mail_id_of_client')
+        string(name: 'mail_id_of_administrator')
+        string(name: 'app_password_of_mail_id_of_administrator')
+    }
+    stages {
+        stage('name_parameter') {
+            steps {
+                echo "Hello ${CLIENT_NAME}"
+                echo "Hello ${mail_id_of_client}"
+                echo "Hello ${mail_id_of_administrator}"
+                echo "Hello ${app_password_of_mail_id_of_administrator}"
+            }
+        }
+        
+        stage('running-playbook') {
+            steps {
+                sh 'ansible-playbook ~/workspace/$JOB_NAME/site.yml -e "username="${CLIENT_NAME}"" -e "mail="${mail_id_of_client}"" -e "mail_id_of_administrator="${mail_id_of_administrator}"" -e "app_password_of_mail_id_of_administrator="${app_password_of_mail_id_of_administrator}""'
+            }
+        }
+    }
+}

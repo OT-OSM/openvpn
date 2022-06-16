@@ -1,0 +1,19 @@
+---
+- set_fact:
+    my_pass: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+
+- name: append credentials in clientlist
+  lineinfile:
+    line: "{{ username }} {{ my_pass }}"
+    path: openvpn/clientlist
+
+- mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "{{ mail_id_of_administrator }}"
+    password: "{{ app_password_of_mail_id_of_administrator }}"
+    to: "{{ mail }}"
+    subject: Credentials for connecting OPENVPN
+    body: Username= {{ username }}
+          Password= {{ my_pass }}
+  delegate_to: localhost
