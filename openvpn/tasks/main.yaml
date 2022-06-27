@@ -1,4 +1,9 @@
 ---
+- name: Including append_clientlist.yaml
+  include: append_clientlist.yaml
+  tags:
+    - append_clientlist
+
 - name: Including install.yaml OpenVPN tasks
   include: install.yaml
 
@@ -17,8 +22,19 @@
 - name: Including config.yaml for OpenVPN setup
   include: config.yaml
 
+- name: Dependecies for password authentication
+  include: password_dependency.yaml
+  when: password_enable
+
 - name: Including client_keys.yaml for OpenVPN setup
   include: client_keys.yaml
+  when: not password_enable
+  tags:
+    - generate_client_keys
+
+- name: Including client_keys.yaml for OpenVPN setup with password
+  include: client_passwd_keys.yaml
+  when: password_enable
   tags:
     - generate_client_keys
 

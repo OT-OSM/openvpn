@@ -124,17 +124,18 @@ Example Playbook
 - name: It will automate OpenVPN setup
   hosts: server
   become: true
+  no_log: true
   roles:
-    - role: osm_openvpn
+    - role: openvpn
 ...
 
 $  ansible-playbook site.yml -i inventory
 
 ```
-- For generating client keys
+- For generating client keys with password and sharing credetials on mail
 
 ```sh
-$  ansible-playbook site.yml -i inventory --tags "generate_client_keys"
+$  ansible-playbook site.yml -i inventory -e "username=example" -e "mail=exampleh@opstree.com" --vault-password-file "pass.yml"
 
 ```
 
